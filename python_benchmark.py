@@ -1,12 +1,23 @@
 import time
+import random
 
-# Fibonacci - Recursive
-def fib(n):
+# Pre-generate a fixed set of random numbers for consistent benchmarking
+random.seed(42)  # Set the seed for reproducibility
+arr = [random.randint(0, 10000) for _ in range(10000)]  # Fixed random array for bubble sort
+
+def fibonacci(n):
     if n <= 1:
         return n
-    return fib(n - 1) + fib(n - 2)
+    return fibonacci(n - 1) + fibonacci(n - 2)
 
-# Sorting - Bubble Sort
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -14,32 +25,25 @@ def bubble_sort(arr):
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
 
-# Prime Checking
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n ** 0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-# Test Functions
-def run_benchmarks():
-    # Fibonacci
-    start = time.time()
-    fib(30)
-    print("Fibonacci Time: ", time.time() - start)
-
-    # Sorting
-    arr = [64, 34, 25, 12, 22, 11, 90]
-    start = time.time()
-    bubble_sort(arr)
-    print("Bubble Sort Time: ", time.time() - start)
-
-    # Prime Checking
-    start = time.time()
-    is_prime(104729)
-    print("Prime Checking Time: ", time.time() - start)
-
 if __name__ == "__main__":
-    run_benchmarks()
+    # Fibonacci Test (Increased input size)
+    start_time = time.time()
+    fibonacci(40)  # Fibonacci(40)
+    end_time = time.time()
+    fib_duration = (end_time - start_time) * 1000  # Convert to milliseconds
+    print(f"Python Fibonacci Time: {fib_duration:.2f} ms")
+
+    # Bubble Sort Test (Increased array size, fixed input)
+    start_time = time.time()
+    bubble_sort(arr)  # Use pre-generated fixed array
+    end_time = time.time()
+    bubble_sort_duration = (end_time - start_time) * 1000  # Convert to milliseconds
+    print(f"Python Bubble Sort Time: {bubble_sort_duration:.2f} ms")
+
+    # Prime Checking Test (Increased number)
+    num = 104729  # A larger prime number for testing
+    start_time = time.time()
+    is_prime(num)
+    end_time = time.time()
+    prime_duration = (end_time - start_time) * 1000  # Convert to milliseconds
+    print(f"Python Prime Checking Time: {prime_duration:.2f} ms")
