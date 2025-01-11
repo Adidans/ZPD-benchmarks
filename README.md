@@ -1,1 +1,1 @@
-# ZPD-benchmarks
+# ZPD algoritmi
