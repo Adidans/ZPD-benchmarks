@@ -1,5 +1,3 @@
-import time
-
 def matrix_multiply(a, b):
     rows = len(a)
     cols = len(b[0])
