@@ -1,5 +1,3 @@
-package java;
-
 public class Fibonacci {
     public static int fibonacci(int n) {
         if (n <= 1) {

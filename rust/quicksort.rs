@@ -1,20 +1,30 @@
-fn quicksort(arr: &mut [i32]) {
+fn quicksort<T: Ord>(mut arr: Vec<T>) -> Vec<T> {
     if arr.len() <= 1 {
-        return;
+        return arr;
     }
-    let pivot_index = arr.len() / 2;
-    let (mut left, mut right): (Vec<i32>, Vec<i32>) = arr
-        .iter()
-        .enumerate()
-        .partition(|&(i, &x)| x < arr[pivot_index] && i != pivot_index);
 
-    left.push(arr[pivot_index]);
-    left.append(&mut right);
-    arr.copy_from_slice(&left);
+    let pivot = arr.remove(0);
+    let mut left = vec![];
+    let mut right = vec![];
+
+    for item in arr {
+        if item <= pivot {
+            left.push(item);
+        } else {
+            right.push(item);
+        }
+    }
+
+    let mut sorted_left = quicksort(left);
+    let mut sorted_right = quicksort(right);
+
+    sorted_left.push(pivot);
+    sorted_left.append(&mut sorted_right);
+
+    sorted_left
 }
 
 fn main() {
-    let mut data = vec![10, 5, 2, 3, 7, 9, 1, 8, 4, 6];
-    quicksort(&mut data);
-    println!("Sorted array: {:?}", data);
+    let data = vec![10, 5, 2, 3, 7, 9, 1, 8, 4, 6];
+    quicksort(data);
 }

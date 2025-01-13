@@ -1,4 +1,3 @@
-package java;
 public class MatricuReizinasana {
     public static int[][] matrixMultiply(int[][] a, int[][] b) {
         int rows = a.length;
